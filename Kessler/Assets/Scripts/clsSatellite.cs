@@ -22,26 +22,17 @@ public class clsSatellite : MonoBehaviour {
 		
 	public void OnTriggerEnter(Collider col){
 		if(col.gameObject.tag == "Debris") {
-			//set collided objects to bright red as detection
-			this.GetComponent<Renderer>().material.color = new Vector4(0, 0, 1.0f, 0);
-			this.transform.localScale = new Vector3(4, 4, 4);
-			//remove collision detection 
-			this.GetComponent<Rigidbody>().detectCollisions = false;
-			//pass current gameobject to create debris from position/orbit
-			GameObject.FindWithTag("GameController").GetComponent<SatManager>().createDebris(this.gameObject);
-			//stop collided objects from moving
-			angleRate = 0;
+			this.GetComponent<Renderer>().material.color = new Vector4(0, 0, 1.0f, 0); //blue
 		} else {
-			//set collided objects to bright red as detection
-			this.GetComponent<Renderer>().material.color = new Vector4(1.0f, 0, 0, 0);
-			this.transform.localScale = new Vector3(4, 4, 4);
-			//remove collision detection 
-			this.GetComponent<Rigidbody>().detectCollisions = false;
-			//pass current gameobject to create debris from position/orbit
-			GameObject.FindWithTag("GameController").GetComponent<SatManager>().createDebris(this.gameObject);
-			//stop collided objects from moving
-			angleRate = 0;
+			this.GetComponent<Renderer>().material.color = new Vector4(1.0f, 0, 0, 0); //red
 		}
+		//remove collision detection 
+		this.GetComponent<Rigidbody>().detectCollisions = false;
+		//pass current gameobject to create debris from position/orbit
+		GameObject.FindWithTag("GameController").GetComponent<SatManager>().createDebris(this.gameObject);
+		this.transform.localScale = new Vector3(4, 4, 4);
+		//stop collided objects from moving
+		angleRate = 0;
 	}
 
 	public void Update(){

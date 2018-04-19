@@ -913,7 +913,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd1aaa4ec0761a64cb5e45d883b3414f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraSpeed: 10
+  cameraSpeed: 50
 --- !u!1 &1819990054
 GameObject:
   m_ObjectHideFlags: 0
@@ -1162,8 +1162,8 @@ MonoBehaviour:
   numSats: 0
   satPrefab: {fileID: 1218318654703842, guid: 5c2753a66b24eff438449b1c15d03e2c, type: 2}
   earthRadius: 63.5
-  angleStep: 0.0001917476
-  satLimit: 2000
+  angleStep: 0.0003834952
+  satLimit: 4000
 --- !u!4 &2120434738
 Transform:
   m_ObjectHideFlags: 0

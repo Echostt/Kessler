@@ -9,17 +9,17 @@ public class SatManager : MonoBehaviour {
 	public int numSats = 0;
 	public GameObject satPrefab;
 	public float earthRadius = 63.5f;
-	public float angleStep = Mathf.PI / 16384; //2 ^ 14 
+	public float angleStep = Mathf.PI / 16384; //2 ^ 14  * 2
 	public int satLimit;
 
 	private Text txtNumSats, txtNumDebris;
-	private Random rand;
+	//private Random rand;
 	private int numDebris = 0;
 
 	// Use this for initialization
 	void Start () {
 		//sats = new List<GameObject>();
-		rand = new Random();
+		//rand = new Random();
 		fillInitSats();
 		txtNumSats = GameObject.Find("TextNumSats").GetComponent<Text>();
 		txtNumDebris = GameObject.Find("TextNumDebris").GetComponent<Text>();
@@ -43,7 +43,7 @@ public class SatManager : MonoBehaviour {
 
 	//adds a new satellite in orbit at a random position travelling in a random direction
 	void addSat(){
-		float randOffset = Random.Range(0, 2000);
+		float randOffset = Random.Range(0, 3000);
 
 		int randPhiRate = Random.Range(2, 6);
 		int randThetaRate = Random.Range(2, 6);
@@ -83,47 +83,41 @@ public class SatManager : MonoBehaviour {
 
 	//takes in a gameobject that has recently collided, and uses it to generate debris
 	public void createDebris(GameObject sat){
-		float colliderRad = sat.GetComponent<SphereCollider>().radius;
-		//int numDebrisSpawned = Random.Range(2, 8);
+		int randDebrisCount = Random.Range(1, 8);
+		for(int i = 0; i < randDebrisCount; ++i) {
+			if(sat.gameObject.tag == "Debris") {
+				createDebrisSat(new Vector4(1.0f, 0.5f, 1.0f, 0), sat); // pink
+			} else {
+				createDebrisSat(new Vector4(1.0f, 0.5f, 0, 0), sat); // orange
+			}
+			txtNumDebris.text = "Debris: " + numDebris;
+		}
+	}
+
+	void createDebrisSat(Vector4 passColor, GameObject sat){
 		clsSatellite clsSat = sat.GetComponent<clsSatellite>();
 
 		float sinTheta = Mathf.Sin(clsSat.posTheta);
-
-		Vector3 startPos = new Vector3(
-			clsSat.dist * sinTheta * Mathf.Cos(clsSat.posPhi),
-			clsSat.dist * sinTheta * Mathf.Sin(clsSat.posPhi),
-			clsSat.dist * Mathf.Cos(clsSat.posTheta));
+		int randSteps = Random.Range(50, 5000);
 
 		Vector3 startNewPos = new Vector3(
-			clsSat.dist * (sinTheta + (clsSat.thetaRate * angleStep * 400)) * Mathf.Cos(clsSat.posPhi + (clsSat.phiRate * angleStep * 400)),
-			clsSat.dist * (sinTheta + (clsSat.thetaRate * angleStep * 400)) * Mathf.Sin(clsSat.posPhi + (clsSat.phiRate * angleStep * 400)),
-			clsSat.dist * Mathf.Cos(clsSat.posTheta + (clsSat.thetaRate * angleStep * 4))
+			clsSat.dist * (sinTheta + (clsSat.thetaRate * angleStep * randSteps)) * Mathf.Cos(clsSat.posPhi + (clsSat.phiRate * angleStep * randSteps)),
+			clsSat.dist * (sinTheta + (clsSat.thetaRate * angleStep * randSteps)) * Mathf.Sin(clsSat.posPhi + (clsSat.phiRate * angleStep * randSteps)),
+			clsSat.dist * Mathf.Cos(clsSat.posTheta + (clsSat.thetaRate * angleStep * randSteps))
 		);
-		if(sat.gameObject.tag == "Debris") {
-			GameObject s = GameObject.Instantiate(sat, startNewPos, Quaternion.identity);
-			s.tag = "Debris";
-			clsSatellite sClsSat = s.GetComponent<clsSatellite>();
-			int randThetaOffset = Random.Range(3, 10);
-			int randPhiOffset = Random.Range(3, 10);
-			sClsSat.angleRate = angleStep;
-			sClsSat.posPhi += angleStep * 2 * randPhiOffset;
-			sClsSat.posTheta += angleStep * randThetaOffset;
-			s.GetComponent<Renderer>().material.color = new Vector4(1.0f, 0.5f, 1.0f, 0);
-			numDebris++;
-			s.GetComponent<Rigidbody>().detectCollisions = true;
-		} else {
-			GameObject s = GameObject.Instantiate(sat, startNewPos, Quaternion.identity);
-			s.tag = "Debris";
-			clsSatellite sClsSat = s.GetComponent<clsSatellite>();
-			int randThetaOffset = Random.Range(3, 10);
-			int randPhiOffset = Random.Range(3, 10);
-			sClsSat.angleRate = angleStep;
-			sClsSat.posPhi += angleStep * 2 * randPhiOffset;
-			sClsSat.posTheta += angleStep * randThetaOffset;
-			s.GetComponent<Renderer>().material.color = new Vector4(1.0f, 0.5f, 0, 0);
-			numDebris++;
-			s.GetComponent<Rigidbody>().detectCollisions = true;
-		}
-		txtNumDebris.text = "Debris: " + numDebris;
+		GameObject s = GameObject.Instantiate(sat, startNewPos, Quaternion.identity);
+		s.transform.localScale = new Vector3(2, 2, 2);
+		s.tag = "Debris";
+		clsSatellite sClsSat = s.GetComponent<clsSatellite>();
+		float randOffset = Random.Range(0, 3000);
+		sClsSat.dist = earthRadius + 5 + (randOffset / 1000);
+		int randThetaOffset = Random.Range(3, 10);
+		int randPhiOffset = Random.Range(3, 10);
+		sClsSat.angleRate = angleStep;
+		sClsSat.posPhi += angleStep * 2 * randPhiOffset;
+		sClsSat.posTheta += angleStep * randThetaOffset;
+		s.GetComponent<Renderer>().material.color = passColor; //orange
+		numDebris++;
+		s.GetComponent<Rigidbody>().detectCollisions = true;
 	}
 }
