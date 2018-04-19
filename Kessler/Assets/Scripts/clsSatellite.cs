@@ -21,25 +21,31 @@ public class clsSatellite : MonoBehaviour {
 	}
 		
 	public void OnTriggerEnter(Collider col){
-		Debug.Log("Collision: " + this.gameObject.transform.localPosition);
-		//set collided objects to bright red as detection
-		this.GetComponent<Renderer>().material.color = new Vector4(1.0f, 0, 0, 0);
-		this.transform.localScale = new Vector3(4, 4, 4);
-		//remove collision detection 
-		this.GetComponent<Rigidbody>().detectCollisions = false;
-		//pass current gameobject to create debris from position/orbit
-		GameObject.FindWithTag("GameController").GetComponent<SatManager>().createDebris(this.gameObject);
-		//stop collided objects from moving
-		angleRate = 0;
+		if(col.gameObject.tag == "Debris") {
+			//set collided objects to bright red as detection
+			this.GetComponent<Renderer>().material.color = new Vector4(0, 0, 1.0f, 0);
+			this.transform.localScale = new Vector3(4, 4, 4);
+			//remove collision detection 
+			this.GetComponent<Rigidbody>().detectCollisions = false;
+			//pass current gameobject to create debris from position/orbit
+			GameObject.FindWithTag("GameController").GetComponent<SatManager>().createDebris(this.gameObject);
+			//stop collided objects from moving
+			angleRate = 0;
+		} else {
+			//set collided objects to bright red as detection
+			this.GetComponent<Renderer>().material.color = new Vector4(1.0f, 0, 0, 0);
+			this.transform.localScale = new Vector3(4, 4, 4);
+			//remove collision detection 
+			this.GetComponent<Rigidbody>().detectCollisions = false;
+			//pass current gameobject to create debris from position/orbit
+			GameObject.FindWithTag("GameController").GetComponent<SatManager>().createDebris(this.gameObject);
+			//stop collided objects from moving
+			angleRate = 0;
+		}
 	}
 
 	public void Update(){
 		angleMove();
-	}
-
-	public IEnumerator delayInitCollision(){
-		yield return new WaitForSecondsRealtime(1);
-		this.GetComponent<Rigidbody>().detectCollisions = true;
 	}
 
 }
