@@ -1163,7 +1163,7 @@ MonoBehaviour:
   satPrefab: {fileID: 1218318654703842, guid: 5c2753a66b24eff438449b1c15d03e2c, type: 2}
   earthRadius: 63.5
   angleStep: 0.0003834952
-  satLimit: 4000
+  satLimit: 6000
 --- !u!4 &2120434738
 Transform:
   m_ObjectHideFlags: 0

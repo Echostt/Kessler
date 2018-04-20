@@ -117,6 +117,7 @@ MonoBehaviour:
   phiRate: 0
   dist: 0
   angleRate: 0
+  collisionsRemaining: 5
 --- !u!135 &135147530318084686
 SphereCollider:
   m_ObjectHideFlags: 1

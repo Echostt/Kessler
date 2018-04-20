@@ -9,7 +9,7 @@ public class SatManager : MonoBehaviour {
 	public int numSats = 0;
 	public GameObject satPrefab;
 	public float earthRadius = 63.5f;
-	public float angleStep = Mathf.PI / 16384; //2 ^ 14  * 2
+	public float angleStep = Mathf.PI / 16384; //2 ^ 14(16384)  * 2
 	public int satLimit;
 
 	private Text txtNumSats, txtNumDebris;
@@ -106,6 +106,7 @@ public class SatManager : MonoBehaviour {
 			clsSat.dist * Mathf.Cos(clsSat.posTheta + (clsSat.thetaRate * angleStep * randSteps))
 		);
 		GameObject s = GameObject.Instantiate(sat, startNewPos, Quaternion.identity);
+		s.hideFlags = HideFlags.HideInHierarchy;
 		s.transform.localScale = new Vector3(2, 2, 2);
 		s.tag = "Debris";
 		clsSatellite sClsSat = s.GetComponent<clsSatellite>();
