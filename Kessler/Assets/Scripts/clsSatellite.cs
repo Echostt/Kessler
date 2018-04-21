@@ -39,8 +39,4 @@ public class clsSatellite : MonoBehaviour {
 		}
 	}
 
-	public void Update(){
-		angleMove();
-	}
-
 }

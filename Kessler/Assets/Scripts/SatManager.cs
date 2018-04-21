@@ -11,6 +11,9 @@ public class SatManager : MonoBehaviour {
 	public float earthRadius = 63.5f;
 	public float angleStep = Mathf.PI / 16384; //2 ^ 14(16384)  * 2
 	public int satLimit;
+	private List<List<GameObject>> satMaster = new List<List<GameObject>>();
+
+	private int currSatSet = 0;
 
 	private Text txtNumSats, txtNumDebris;
 	//private Random rand;
@@ -18,8 +21,9 @@ public class SatManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		//sats = new List<GameObject>();
-		//rand = new Random();
+		for (int i = 0; i < 20; i++){
+			satMaster.Add(new List<GameObject>());
+		}
 		fillInitSats();
 		txtNumSats = GameObject.Find("TextNumSats").GetComponent<Text>();
 		txtNumDebris = GameObject.Find("TextNumDebris").GetComponent<Text>();
@@ -27,10 +31,10 @@ public class SatManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//angleMoveHandler();
-		if(numSats < satLimit) {
-			addSat();
+		for (int j = 0; j < satMaster[currSatSet % satMaster.Count].Count; ++j){
+			satMaster[currSatSet % satMaster.Count][j].GetComponent<clsSatellite>().angleMove();
 		}
+		currSatSet += 1;
 		txtNumSats.text = "Num Sats: " + numSats + " FPS: " + (1.0f/Time.smoothDeltaTime);
 	}
 
@@ -79,11 +83,14 @@ public class SatManager : MonoBehaviour {
 		c.thetaRate = randThetaRate;
 		c.angleRate = angleStep;
 		numSats++;
+		satMaster[numSats % satMaster.Count].Add(s);
 	}
 
 	//takes in a gameobject that has recently collided, and uses it to generate debris
 	public void createDebris(GameObject sat){
 		int randDebrisCount = Random.Range(1, 8);
+		if(sat.tag != "Debris")
+			numSats -= 1;
 		for(int i = 0; i < randDebrisCount; ++i) {
 			if(sat.gameObject.tag == "Debris") {
 				createDebrisSat(new Vector4(1.0f, 0.5f, 1.0f, 0), sat); // pink
@@ -119,6 +126,7 @@ public class SatManager : MonoBehaviour {
 		sClsSat.posTheta += angleStep * randThetaOffset;
 		s.GetComponent<Renderer>().material.color = passColor; //orange
 		numDebris++;
+		satMaster[currSatSet % satMaster.Count].Add(s);
 		s.GetComponent<Rigidbody>().detectCollisions = true;
 	}
 }
