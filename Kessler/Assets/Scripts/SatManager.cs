@@ -21,15 +21,14 @@ public class SatManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		for (int i = 0; i < 20; i++){
+		for (int i = 0; i < 10; i++){
 			satMaster.Add(new List<GameObject>());
 		}
 		fillInitSats();
 		txtNumSats = GameObject.Find("TextNumSats").GetComponent<Text>();
 		txtNumDebris = GameObject.Find("TextNumDebris").GetComponent<Text>();
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 		for (int j = 0; j < satMaster[currSatSet % satMaster.Count].Count; ++j){
 			satMaster[currSatSet % satMaster.Count][j].GetComponent<clsSatellite>().angleMove();
@@ -88,7 +87,7 @@ public class SatManager : MonoBehaviour {
 
 	//takes in a gameobject that has recently collided, and uses it to generate debris
 	public void createDebris(GameObject sat){
-		int randDebrisCount = Random.Range(1, 8);
+		int randDebrisCount = Random.Range(2, 10);
 		if(sat.tag != "Debris")
 			numSats -= 1;
 		for(int i = 0; i < randDebrisCount; ++i) {
@@ -105,7 +104,7 @@ public class SatManager : MonoBehaviour {
 		clsSatellite clsSat = sat.GetComponent<clsSatellite>();
 
 		float sinTheta = Mathf.Sin(clsSat.posTheta);
-		int randSteps = Random.Range(50, 5000);
+		int randSteps = Random.Range(3, 30);
 
 		Vector3 startNewPos = new Vector3(
 			clsSat.dist * (sinTheta + (clsSat.thetaRate * angleStep * randSteps)) * Mathf.Cos(clsSat.posPhi + (clsSat.phiRate * angleStep * randSteps)),
@@ -115,12 +114,13 @@ public class SatManager : MonoBehaviour {
 		GameObject s = GameObject.Instantiate(sat, startNewPos, Quaternion.identity);
 		s.hideFlags = HideFlags.HideInHierarchy;
 		s.transform.localScale = new Vector3(2, 2, 2);
+		s.GetComponent<SphereCollider>().radius /= 2;
 		s.tag = "Debris";
 		clsSatellite sClsSat = s.GetComponent<clsSatellite>();
 		float randOffset = Random.Range(0, 3000);
 		sClsSat.dist = earthRadius + 5 + (randOffset / 1000);
-		int randThetaOffset = Random.Range(3, 10);
-		int randPhiOffset = Random.Range(3, 10);
+		int randThetaOffset = Random.Range(5, 75);
+		int randPhiOffset = Random.Range(5, 75);
 		sClsSat.angleRate = angleStep;
 		sClsSat.posPhi += angleStep * 2 * randPhiOffset;
 		sClsSat.posTheta += angleStep * randThetaOffset;

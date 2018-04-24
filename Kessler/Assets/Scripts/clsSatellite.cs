@@ -10,8 +10,8 @@ public class clsSatellite : MonoBehaviour {
 
 	//move object based on fixed angular rate around a sphere
 	public void angleMove(){
-		this.posPhi += (angleRate * phiRate);// + (Mathf.PI / 1024) * angleRate ;
-		this.posTheta += (angleRate * thetaRate);// + (Mathf.PI / 1024) * angleRate;
+		this.posPhi += (angleRate * phiRate);
+		this.posTheta += (angleRate * thetaRate);
 		float sinTheta = Mathf.Sin(posTheta);
 		this.gameObject.transform.SetPositionAndRotation(new Vector3(
 			dist * sinTheta * Mathf.Cos(posPhi),
