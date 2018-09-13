@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/KesslerView.unity
+- path: Assets/Scenes/Spess.unity
   isLoaded: 1
   isActive: 1
