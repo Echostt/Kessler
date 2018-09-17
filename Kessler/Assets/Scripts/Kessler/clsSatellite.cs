@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class clsSatellite : MonoBehaviour {
-	public float posTheta = Mathf.PI, posPhi = Mathf.PI,
+	public float posTheta = 0, posPhi = 0,
 				thetaRate = 0,  phiRate = 0, 
 				dist = 0, angleRate = 0;
 	public int collisionsRemaining;
@@ -20,14 +18,14 @@ public class clsSatellite : MonoBehaviour {
         else if (posTheta <= -2 * Mathf.PI)
             posTheta += 2 * Mathf.PI;
 
+        // Add offsets to posPhi and posTheta for diff arrangements //TD ////////////////////
         this.posPhi += (angleRate * phiRate);
-		this.posTheta += (angleRate * thetaRate);
+        this.posTheta += (angleRate * thetaRate);
 		float sinTheta = Mathf.Sin(posTheta);
-		this.gameObject.transform.SetPositionAndRotation(new Vector3(
+		this.gameObject.transform.position = (new Vector3(
 			dist * sinTheta * Mathf.Cos(posPhi),
 			dist * sinTheta * Mathf.Sin(posPhi),
-			dist * Mathf.Cos(posTheta)),
-			Quaternion.identity
+			dist * Mathf.Cos(posTheta))
 		);
 	}
 		

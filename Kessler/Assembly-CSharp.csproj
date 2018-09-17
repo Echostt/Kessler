@@ -58,6 +58,7 @@
      <Compile Include="Assets\Scripts\Kessler\SatManager.cs" />
      <Compile Include="Assets\Scripts\SpessGame\GameController.cs" />
      <Compile Include="Assets\Scripts\SpessGame\SatelliteController.cs" />
+     <Compile Include="Assets\Scripts\SpessGame\SliderTextController.cs" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>C:/Users/Echostt/Documents/GitHub/Kessler/Kessler/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
  </Reference>
