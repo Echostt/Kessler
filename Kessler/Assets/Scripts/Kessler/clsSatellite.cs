@@ -1,22 +1,23 @@
 ﻿using UnityEngine;
 
 public class clsSatellite : MonoBehaviour {
-	public float posTheta = 0, posPhi = 0,
+	public float posTheta = 0,  posPhi = 0,
 				thetaRate = 0,  phiRate = 0, 
 				dist = 0, angleRate = 0;
 	public int collisionsRemaining;
+    private const float cPI = Mathf.PI;
 
 	//move object based on fixed angular rate around a sphere
 	public void angleMove(){
         //reduction in angle movement to elim overflow after long idle
-        if (posPhi >= 2 * Mathf.PI)
-            posPhi -= 2 * Mathf.PI;
-        else if (posPhi <= -2 * Mathf.PI)
-            posPhi += 2 * Mathf.PI;
-        if (posTheta >= 2 * Mathf.PI)
-            posTheta -= 2 * Mathf.PI;
-        else if (posTheta <= -2 * Mathf.PI)
-            posTheta += 2 * Mathf.PI;
+        if (posPhi >= 2 * cPI)
+            posPhi -= 2 * cPI;
+        else if (posPhi <= -2 * cPI)
+            posPhi += 2 * cPI;
+        if (posTheta >= 2 * cPI)
+            posTheta -= 2 * cPI;
+        else if (posTheta <= -2 * cPI)
+            posTheta += 2 * cPI;
 
         // Add offsets to posPhi and posTheta for diff arrangements //TD ////////////////////
         this.posPhi += (angleRate * phiRate);
@@ -27,6 +28,8 @@ public class clsSatellite : MonoBehaviour {
 			dist * sinTheta * Mathf.Sin(posPhi),
 			dist * Mathf.Cos(posTheta))
 		);
+        
+        //this.gameObject.transform.RotateAround(Vector3.zero, Vector3.up, 100 * Time.deltaTime);
 	}
 		
     /*

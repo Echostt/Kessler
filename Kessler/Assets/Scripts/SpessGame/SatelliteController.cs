@@ -6,17 +6,29 @@ using UnityEngine.UI;
 public class SatelliteController : MonoBehaviour {
     public List<GameObject> satPrefabs;
     public GameObject txtNumSats;
-    private bool isCreatingSats = false;
 
-	private List<clsSatellite> sats = new List<clsSatellite>();
+    private int currSatSet = 0;
+    private bool isCreatingSats = false;
+    private List<List<GameObject>> satMaster = new List<List<GameObject>>();
+    private List<clsSatellite> sats = new List<clsSatellite>();
+
+    private void Start () {
+        for (int i = 0; i < 6; i++) {
+            satMaster.Add(new List<GameObject>());
+        }
+    }
 
 	private void Update(){
-        GameObject.FindGameObjectWithTag("FPSText").GetComponent<Text>().text = " FPS: " + (1.0f / Time.smoothDeltaTime);
+        GameObject.FindGameObjectWithTag("FPSText").GetComponent<Text>().text = " FPS: " + (1.0f / Time.smoothDeltaTime).ToString().Substring(0,2);
         if (sats.Count > 0) {
-			for (int i = 0; i < sats.Count; ++i) {
-                sats[i].GetComponent<clsSatellite>().angleMove();
-			}
-		}
+            //using a set double list to contain the sat game objects
+            //decreases fps loss as sat counts get larger, but each satellite position updates
+            //more slowly based on depth of list
+            for (int j = 0; j < satMaster[currSatSet % satMaster.Count].Count; ++j) {
+                satMaster[currSatSet % satMaster.Count][j].GetComponent<clsSatellite>().angleMove();
+            }
+            currSatSet += 1;
+        }
 	}
 
     /// <summary>
@@ -72,19 +84,15 @@ public class SatelliteController : MonoBehaviour {
         float thetaRate = float.Parse(GameObject.Find("inputTheta").GetComponent<InputField>().text);
         float dist = float.Parse(GameObject.Find("inputDist").GetComponent<InputField>().text);
 
-        //chaotic starting positions
-        /*
-        float randStartPhi = Random.Range(-Mathf.PI, Mathf.PI);
-        float randStartTheta = Random.Range(-Mathf.PI, Mathf.PI);
-        */
-        float randStartPhi = 0;
-        float randStartTheta = 0;
-        float sinTheta = Mathf.Sin(randStartTheta);
+        //starting positions
+        float startPhi = 0;
+        float startTheta = Mathf.PI/2;
+        float sinTheta = Mathf.Sin(startTheta);
 
         Vector3 startPos = new Vector3(
-            dist * sinTheta * Mathf.Cos(randStartPhi),
-            dist * sinTheta * Mathf.Sin(randStartPhi),
-            dist * Mathf.Cos(randStartTheta));
+            dist * sinTheta * Mathf.Cos(startPhi),
+            dist * sinTheta * Mathf.Sin(startPhi),
+            dist * Mathf.Cos(startTheta));
 
         GameObject s = GameObject.Instantiate(satPrefabs[satPos - 1], startPos, Quaternion.identity);
         //s.hideFlags = HideFlags.HideInHierarchy;
@@ -92,18 +100,18 @@ public class SatelliteController : MonoBehaviour {
         //distance is from center of the earth
 
         c.dist = dist;
-        c.posPhi = randStartPhi;
-        c.posTheta = randStartTheta;
+        c.posPhi = startPhi;
+        c.posTheta = startTheta;
         //c.posTheta = c.posPhi;
 
         c.phiRate = phiRate;
         c.thetaRate = thetaRate;
-        //c.angleRate = 0.0005f;
-        c.angleRate = 0.005f;
+        c.angleRate = 0.008f;
 
         sats.Add(c);
         txtNumSats.GetComponent<Text>().text = "Sats: " + sats.Count;
         GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().addSat();
+        satMaster[sats.Count % satMaster.Count].Add(s);
     }
 
     public void addSat1 () {

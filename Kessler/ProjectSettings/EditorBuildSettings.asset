@@ -6,5 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/KesslerView.unity
-    guid: ae94dd6ef932f9448835940bce81b7ce
+    path: Assets/Scenes/Spess.unity
+    guid: 36c3de984d5fac54aa0c000ebcc8f047
+  m_configObjects: {}

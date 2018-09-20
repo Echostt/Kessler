@@ -20,11 +20,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4766290414963368}
   - component: {fileID: 33721208282752484}
-  - component: {fileID: 135147530318084686}
-  - component: {fileID: 23607271314491370}
   - component: {fileID: 114729845866195076}
   - component: {fileID: 54651499553049482}
   - component: {fileID: 96715365828487236}
+  - component: {fileID: 23411849757115486}
   m_Layer: 0
   m_Name: Sat1
   m_TagString: Untagged
@@ -45,7 +44,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23607271314491370
+--- !u!23 &23411849757115486
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,7 +67,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_PreserveUVs: 1
+  m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 0
@@ -86,7 +85,7 @@ MeshFilter:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1218318654703842}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!54 &54651499553049482
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -212,15 +211,3 @@ MonoBehaviour:
   dist: 0
   angleRate: 0
   collisionsRemaining: 5
---- !u!135 &135147530318084686
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1218318654703842}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1
-  m_Center: {x: 0, y: 0, z: 0}
