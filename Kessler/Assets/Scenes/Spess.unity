@@ -1873,6 +1873,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   txtMoneyTotal: {fileID: 1060852243}
   txtMoneyOverTime: {fileID: 588178107}
+  txtNumSats: {fileID: 170978272}
   moneyUpdateSpeed: 1
 --- !u!4 &684200728
 Transform:
@@ -2546,8 +2547,8 @@ Camera:
   m_GameObject: {fileID: 1077531653}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 70.41, y: 52.63}
   m_LensShift: {x: 0, y: 0}

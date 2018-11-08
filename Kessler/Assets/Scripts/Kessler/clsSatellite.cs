@@ -32,7 +32,7 @@ public class clsSatellite : MonoBehaviour {
         //this.gameObject.transform.RotateAround(Vector3.zero, Vector3.up, 100 * Time.deltaTime);
 	}
 		
-    /*
+    
 	public void OnTriggerEnter(Collider col){
 		this.collisionsRemaining -= 1;
 		if(this.collisionsRemaining > 0) {
@@ -44,11 +44,11 @@ public class clsSatellite : MonoBehaviour {
 			//remove collision detection 
 			this.GetComponent<Rigidbody>().detectCollisions = false;
             //pass current gameobject to create debris from position/orbit
-			//GameObject.FindWithTag("SatelliteController").GetComponent<SatManager>().createDebris(this.gameObject);
+			GameObject.FindWithTag("GameController").GetComponent<SatManager>().createDebris(this.gameObject);
 			this.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
 			//stop collided objects from moving
 			angleRate = 0;
 		}
 	}
-    */
+    
 }

@@ -70,7 +70,7 @@ public class SatManager : MonoBehaviour {
 			dist * Mathf.Cos(randStartTheta));
 
 		GameObject s = GameObject.Instantiate(satPrefab, startPos, Quaternion.identity);
-		s.hideFlags = HideFlags.HideInHierarchy;
+		//s.hideFlags = HideFlags.HideInHierarchy;
 		clsSatellite c = s.GetComponent<clsSatellite>();
 		//distance is from center of the earth
 		//dist = radius + minimum distance + randomvalue scaled to be between 500-700km

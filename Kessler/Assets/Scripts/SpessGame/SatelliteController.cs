@@ -5,30 +5,16 @@ using UnityEngine.UI;
 
 public class SatelliteController : MonoBehaviour {
     public List<GameObject> satPrefabs;
-    public GameObject txtNumSats;
-
     private int currSatSet = 0;
     private bool isCreatingSats = false;
-    private List<List<GameObject>> satMaster = new List<List<GameObject>>();
-    private List<clsSatellite> sats = new List<clsSatellite>();
+    private Text txtFPS;
 
     private void Start () {
-        for (int i = 0; i < 6; i++) {
-            satMaster.Add(new List<GameObject>());
-        }
+        txtFPS = GameObject.FindGameObjectWithTag("FPSText").GetComponent<Text>();
     }
 
 	private void Update(){
-        GameObject.FindGameObjectWithTag("FPSText").GetComponent<Text>().text = " FPS: " + (1.0f / Time.smoothDeltaTime).ToString().Substring(0,2);
-        if (sats.Count > 0) {
-            //using a set double list to contain the sat game objects
-            //decreases fps loss as sat counts get larger, but each satellite position updates
-            //more slowly based on depth of list
-            for (int j = 0; j < satMaster[currSatSet % satMaster.Count].Count; ++j) {
-                satMaster[currSatSet % satMaster.Count][j].GetComponent<clsSatellite>().angleMove();
-            }
-            currSatSet += 1;
-        }
+        txtFPS.text = " FPS: " + (1.0f / Time.smoothDeltaTime).ToString().Substring(0,2);
 	}
 
     /// <summary>
@@ -72,9 +58,7 @@ public class SatelliteController : MonoBehaviour {
         //c.thetaRate = randThetaRate;
         c.thetaRate = c.phiRate * 2;
         c.angleRate = 0.0005f;
-
-        sats.Add(c);
-        txtNumSats.GetComponent<Text>().text = "Sats: " + sats.Count;
+       
         GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().addSat();
 	}
 
@@ -96,7 +80,7 @@ public class SatelliteController : MonoBehaviour {
 
         GameObject s = GameObject.Instantiate(satPrefabs[satPos - 1], startPos, Quaternion.identity);
         //s.hideFlags = HideFlags.HideInHierarchy;
-        clsSatellite c = s.GetComponent<clsSatellite>();
+        clsSat c = s.GetComponent<clsSat>();
         //distance is from center of the earth
 
         c.dist = dist;
@@ -108,10 +92,7 @@ public class SatelliteController : MonoBehaviour {
         c.thetaRate = thetaRate;
         c.angleRate = 0.008f;
 
-        sats.Add(c);
-        txtNumSats.GetComponent<Text>().text = "Sats: " + sats.Count;
         GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().addSat();
-        satMaster[sats.Count % satMaster.Count].Add(s);
     }
 
     public void addSat1 () {
@@ -126,7 +107,7 @@ public class SatelliteController : MonoBehaviour {
     public IEnumerator createPersistentSats () {
         while (true) {
             addSatSpecific(1);
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.2f);
         }
     }
 

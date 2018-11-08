@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour {
     public Text txtMoneyTotal;
     public Text txtMoneyOverTime;
+    public Text txtNumSats;
     public float moneyUpdateSpeed;
 
     private int numSats1 = 0;
@@ -22,8 +23,8 @@ public class GameController : MonoBehaviour {
             txtMoneyTotal.text = "$" + money.ToString();
             txtMoneyOverTime.text = (numSats1 * sat1Val).ToString();
         }
-        
-	}
+        txtNumSats.GetComponent<Text>().text = "Sats: " + numSats1;
+    }
 
     public void addSat () {
         numSats1 += 1;

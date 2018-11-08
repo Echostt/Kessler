@@ -20,10 +20,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4766290414963368}
   - component: {fileID: 33721208282752484}
-  - component: {fileID: 114729845866195076}
   - component: {fileID: 54651499553049482}
   - component: {fileID: 96715365828487236}
   - component: {fileID: 23411849757115486}
+  - component: {fileID: 114568482978910826}
   m_Layer: 0
   m_Name: Sat1
   m_TagString: Untagged
@@ -108,7 +108,7 @@ TrailRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1218318654703842}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -193,7 +193,7 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!114 &114729845866195076
+--- !u!114 &114568482978910826
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1218318654703842}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8571d8c75cd64642ae8fb272ac9cdb4, type: 3}
+  m_Script: {fileID: 11500000, guid: e85639aa41f3bc94b9fc97507967b4f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   posTheta: 0
@@ -210,4 +210,4 @@ MonoBehaviour:
   phiRate: 0
   dist: 0
   angleRate: 0
-  collisionsRemaining: 5
+  collisionsRemaining: 0
